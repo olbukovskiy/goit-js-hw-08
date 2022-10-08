@@ -4,7 +4,7 @@ import { galleryItems } from './gallery-items';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-const galleryVoid = document.querySelector('.gallery');
+const galleryPlace = document.querySelector('.gallery');
 
 function markupCreator(galleryItems) {
   return galleryItems.map(
@@ -16,7 +16,7 @@ function markupCreator(galleryItems) {
 }
 const newMarkup = markupCreator(galleryItems);
 
-galleryVoid.innerHTML = newMarkup;
+galleryPlace.innerHTML = newMarkup;
 
 let lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
