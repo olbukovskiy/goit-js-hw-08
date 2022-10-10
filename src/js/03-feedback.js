@@ -8,24 +8,14 @@ const throttler = require('lodash.throttle');
 const STORAGE_KEY = 'feedback-form-state';
 let values = {};
 
-refs.emailField.addEventListener(
+refs.feedbackForm.addEventListener(
   'input',
-  throttler(feedbacEmailkDataHandler, 500)
+  throttler(feedbacFormkDataHandler, 500)
 );
 
-refs.textarea.addEventListener(
-  'input',
-  throttler(feedbackTextareaDataHandler, 500)
-);
+function feedbacFormkDataHandler(event) {
+  values[event.target.name] = event.target.value;
 
-function feedbacEmailkDataHandler(event) {
-  values.email = event.target.value;
-  let storageValues = JSON.stringify(values);
-  localStorage.setItem(STORAGE_KEY, storageValues);
-}
-
-function feedbackTextareaDataHandler(event) {
-  values.message = event.target.value;
   let storageValues = JSON.stringify(values);
   localStorage.setItem(STORAGE_KEY, storageValues);
 }
@@ -33,13 +23,19 @@ function feedbackTextareaDataHandler(event) {
 window.addEventListener('load', getStorageDataHandler);
 
 function getStorageDataHandler() {
+  if (!localStorage.getItem(STORAGE_KEY)) {
+    return;
+  }
+
   let storageData = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-  if (storageData?.email) {
+  if (storageData.email) {
+    values.email = storageData.email;
     refs.emailField.value = storageData.email;
   }
 
-  if (storageData?.message) {
+  if (storageData.message) {
+    values.message = storageData.message;
     refs.textarea.value = storageData.message;
   }
 }
